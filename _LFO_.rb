@@ -1,7 +1,7 @@
 # _LFO_
 clear
 
-TWO_PI = 2 * Math::PI
+TAU = 2 * Math::PI
 class LFO
   attr_reader :name
   
@@ -42,10 +42,6 @@ class LFO
     lfo
   end
 
-  def self.instances
-    @@instances
-  end
-
   def freq(f)
     @stepDur = (1/f.to_f)/@stepCount if f != nil
   end
@@ -83,7 +79,7 @@ class LFO
     @minVal = minVal.to_f
     @maxVal = maxVal.to_f
     @values = Array.new((@stepCount/2.0)+1){|i| map(i.to_f/(@stepCount/2.0), 0, 1, @minVal, @maxVal)}.ring.reflect if waveForm == :tri
-    @values = Array.new(@stepCount){|i| map(Math::sin((i.to_f/@stepCount)*TWO_PI)+1, 0, 2, @minVal, @maxVal)}.ring if waveForm == :sin
+    @values = Array.new(@stepCount){|i| map(Math::sin((i.to_f/@stepCount)*TAU)+1, 0, 2, @minVal, @maxVal)}.ring if waveForm == :sin
     @values = Array.new(@stepCount){|i| map(i.to_f/@stepCount, 0, 1, @minVal, @maxVal)}.ring if waveForm == :saw
     @values = Array.new(@stepCount){|i| map(1-(i.to_f/@stepCount), 0, 1, @minVal, @maxVal)}.ring if waveForm == :ramp
     @values = Array.new(@stepCount){|i| i > @stepCount/2.0 ? @maxVal : @minVal}.ring if waveForm == :squ
