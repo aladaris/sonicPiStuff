@@ -80,8 +80,8 @@ class LFO
     @maxVal = maxVal.to_f
     @values = Array.new((@stepCount/2.0)+1){|i| map(i.to_f/(@stepCount/2.0), 0, 1, @minVal, @maxVal)}.ring.reflect if waveForm == :tri
     @values = Array.new(@stepCount){|i| map(Math::sin((i.to_f/@stepCount)*TAU)+1, 0, 2, @minVal, @maxVal)}.ring if waveForm == :sin
-    @values = Array.new(@stepCount){|i| map(i.to_f/@stepCount, 0, 1, @minVal, @maxVal)}.ring if waveForm == :saw
-    @values = Array.new(@stepCount){|i| map(1-(i.to_f/@stepCount), 0, 1, @minVal, @maxVal)}.ring if waveForm == :ramp
+    @values = Array.new(@stepCount){|i| map(i.to_f/@stepCount, 0, 1, @minVal, @maxVal)}.ring if waveForm == :ramp
+    @values = Array.new(@stepCount){|i| map(1-(i.to_f/@stepCount), 0, 1, @minVal, @maxVal)}.ring if waveForm == :saw
     @values = Array.new(@stepCount){|i| i > @stepCount/2.0 ? @maxVal : @minVal}.ring if waveForm == :squ
     @values = Array.new(@stepCount){@@random.rand(@minVal..@maxVal)}.ring if waveForm == :rng
   end
