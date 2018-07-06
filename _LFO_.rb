@@ -92,25 +92,31 @@ end
 
 '''
 # Usage example
-lfo1 = LFO.getLfo :lfo1, wave: :sin, freq: 0.1, min: 25, max: 127
-lfo2 = LFO.getLfo :lfo2, wave: :saw, freq: 2, min: 0, max: 0.998
+lfo1 = LFO.getLfo :lfo1, wave: :sin, freq: 0.01, min: 0.1, max: 0.99
+lfo2 = LFO.getLfo :lfo2, wave: :saw, freq: 0.05, min: -1, max: 1
+lfo3 = LFO.getLfo :lfo3, wave: :sin, freq: 0.005, min: 55, max: 108
+lfo4 = LFO.getLfo :lfo4, wave: :squ, freq: 0.1, min: 0, max: 2
+lfo5 = LFO.getLfo :lfo5, wave: :sin, freq: 0.05, min: 0.001, max: 4
 
-use_bpm 60
+use_bpm 53
 
+echo = nil
 lpf = nil
-
 live_loop :lfoLoop do
-  control lpf, cutoff: lfo1.tick, res: lfo2.tick if lpf != nil
+  control echo, mix: lfo1.tick if echo != nil
+  control lpf, cutoff: lfo3.tick, res: lfo1.value if lpf != nil
+  lfo3.freq lfo5.tick
   sleep 0.05
 end
 
-
 live_loop :l0 do
-  use_synth :supersaw
-  with_fx :rlpf, cutoff_slide: 0.15, res_slide: 0.015 do |fx1|
-    lpf = fx1
-    play scale([:Es3, :Es2, :Gs2].choose, :locrian).choose, attack: 0.2, sustain: 0.15, release: 0.15
-    sleep 0.25
+  use_synth :mod_dsaw
+  with_fx :rlpf, cutoff_slide: 0.05, res_slide: 0.01 do |fx0|
+    lpf = fx0
+    with_fx :echo, phase: 0.05, decay: 0.1, mix: 0.95 do |fx1|
+      echo = fx1
+      play_pattern_timed chord(:Ds3 + lfo4.tick, :m), [[0.1,0.25,0.15],[0.5,0.1,0.4],[0.25,0.25,0.25]].choose, pan: lfo2.tick
+    end
   end
 end
 '''
