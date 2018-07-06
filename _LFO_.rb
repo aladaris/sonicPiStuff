@@ -92,11 +92,11 @@ end
 
 '''
 # Usage example
-lfo1 = LFO.getLfo :lfo1, wave: :sin, freq: 0.01, min: 0.1, max: 0.99
-lfo2 = LFO.getLfo :lfo2, wave: :saw, freq: 0.05, min: -1, max: 1
-lfo3 = LFO.getLfo :lfo3, wave: :sin, freq: 0.005, min: 55, max: 108
-lfo4 = LFO.getLfo :lfo4, wave: :squ, freq: 0.1, min: 0, max: 2
-lfo5 = LFO.getLfo :lfo5, wave: :sin, freq: 0.05, min: 0.001, max: 4
+lfo1 = LFO.getLfo :lfo1, wave: :sin, freq: 0.01, min: 0.1, max: 0.99 # Controls echo.mix and lpf.res
+lfo2 = LFO.getLfo :lfo2, wave: :saw, freq: 0.05, min: -1, max: 1     # Controls the panning
+lfo3 = LFO.getLfo :lfo3, wave: :sin, freq: 0.005, min: 55, max: 108  # Controls lpf.cutoff
+lfo4 = LFO.getLfo :lfo4, wave: :squ, freq: 0.1, min: 0, max: 2       # Controls the chord to be played
+lfo5 = LFO.getLfo :lfo5, wave: :sin, freq: 0.05, min: 0.001, max: 4  # Controls lfo3.freq
 
 use_bpm 53
 
